@@ -1,0 +1,206 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > CustomUserMapperImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.demos.paymybuddy.mapper</a>
+</div>
+
+<h1>Coverage Summary for Class: CustomUserMapperImpl (com.demos.paymybuddy.mapper)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CustomUserMapperImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    40%
+  </span>
+  <span class="absValue">
+    (2/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    5.8%
+  </span>
+  <span class="absValue">
+    (3/52)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.demos.paymybuddy.mapper;
+&nbsp;
+&nbsp;import com.demos.paymybuddy.domain.CustomUser;
+&nbsp;import com.demos.paymybuddy.dto.CustomUserDto;
+&nbsp;import com.demos.paymybuddy.dto.UpdateUserRequestDto;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import javax.annotation.processing.Generated;
+&nbsp;import org.springframework.stereotype.Component;
+&nbsp;
+&nbsp;@Generated(
+&nbsp;    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+&nbsp;    date = &quot;2023-07-20T03:18:58+0100&quot;,
+&nbsp;    comments = &quot;version: 1.5.3.Final, compiler: javac, environment: Java 11.0.19 (Amazon.com Inc.)&quot;
+&nbsp;)
+&nbsp;@Component
+<b class="fc">&nbsp;public class CustomUserMapperImpl implements CustomUserMapper {</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public CustomUser customUserDtoToCustomUser(CustomUserDto customUserDto) {
+<b class="nc">&nbsp;        if ( customUserDto == null ) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        CustomUser customUser = new CustomUser();</b>
+&nbsp;
+<b class="nc">&nbsp;        customUser.setId( customUserDto.getId() );</b>
+<b class="nc">&nbsp;        customUser.setFirstName( customUserDto.getFirstName() );</b>
+<b class="nc">&nbsp;        customUser.setLastName( customUserDto.getLastName() );</b>
+<b class="nc">&nbsp;        customUser.setEmail( customUserDto.getEmail() );</b>
+<b class="nc">&nbsp;        customUser.setAddress( customUserDto.getAddress() );</b>
+<b class="nc">&nbsp;        customUser.setPhone( customUserDto.getPhone() );</b>
+<b class="nc">&nbsp;        customUser.setUsername( customUserDto.getUsername() );</b>
+<b class="nc">&nbsp;        customUser.setPassword( customUserDto.getPassword() );</b>
+<b class="nc">&nbsp;        customUser.setAccount( customUserDto.getAccount() );</b>
+<b class="nc">&nbsp;        List&lt;CustomUser&gt; list = customUserDto.getFriendsList();</b>
+<b class="nc">&nbsp;        if ( list != null ) {</b>
+<b class="nc">&nbsp;            customUser.setFriendsList( new ArrayList&lt;CustomUser&gt;( list ) );</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return customUser;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public CustomUserDto customUserToCustomUserDto(CustomUser customUser) {
+<b class="fc">&nbsp;        if ( customUser == null ) {</b>
+<b class="fc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        CustomUserDto customUserDto = new CustomUserDto();</b>
+&nbsp;
+<b class="nc">&nbsp;        customUserDto.setId( customUser.getId() );</b>
+<b class="nc">&nbsp;        customUserDto.setFirstName( customUser.getFirstName() );</b>
+<b class="nc">&nbsp;        customUserDto.setLastName( customUser.getLastName() );</b>
+<b class="nc">&nbsp;        customUserDto.setEmail( customUser.getEmail() );</b>
+<b class="nc">&nbsp;        customUserDto.setAddress( customUser.getAddress() );</b>
+<b class="nc">&nbsp;        customUserDto.setPhone( customUser.getPhone() );</b>
+<b class="nc">&nbsp;        customUserDto.setUsername( customUser.getUsername() );</b>
+<b class="nc">&nbsp;        customUserDto.setAccount( customUser.getAccount() );</b>
+<b class="nc">&nbsp;        List&lt;CustomUser&gt; list = customUser.getFriendsList();</b>
+<b class="nc">&nbsp;        if ( list != null ) {</b>
+<b class="nc">&nbsp;            customUserDto.setFriendsList( new ArrayList&lt;CustomUser&gt;( list ) );</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return customUserDto;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public CustomUserDto updateUserRequestDtoToCustomUser(UpdateUserRequestDto updateUserRequestDto) {
+<b class="nc">&nbsp;        if ( updateUserRequestDto == null ) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        CustomUserDto customUserDto = new CustomUserDto();</b>
+&nbsp;
+<b class="nc">&nbsp;        customUserDto.setFirstName( updateUserRequestDto.getFirstName() );</b>
+<b class="nc">&nbsp;        customUserDto.setLastName( updateUserRequestDto.getLastName() );</b>
+<b class="nc">&nbsp;        customUserDto.setEmail( updateUserRequestDto.getEmail() );</b>
+<b class="nc">&nbsp;        customUserDto.setAddress( updateUserRequestDto.getAddress() );</b>
+<b class="nc">&nbsp;        customUserDto.setPhone( updateUserRequestDto.getPhone() );</b>
+<b class="nc">&nbsp;        customUserDto.setUsername( updateUserRequestDto.getUsername() );</b>
+&nbsp;
+<b class="nc">&nbsp;        return customUserDto;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public UpdateUserRequestDto customUserDtoToUpdateUserRequestDto(CustomUserDto customUserDto) {
+<b class="nc">&nbsp;        if ( customUserDto == null ) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        UpdateUserRequestDto updateUserRequestDto = new UpdateUserRequestDto();</b>
+&nbsp;
+<b class="nc">&nbsp;        updateUserRequestDto.setFirstName( customUserDto.getFirstName() );</b>
+<b class="nc">&nbsp;        updateUserRequestDto.setLastName( customUserDto.getLastName() );</b>
+<b class="nc">&nbsp;        updateUserRequestDto.setEmail( customUserDto.getEmail() );</b>
+<b class="nc">&nbsp;        updateUserRequestDto.setAddress( customUserDto.getAddress() );</b>
+<b class="nc">&nbsp;        updateUserRequestDto.setPhone( customUserDto.getPhone() );</b>
+<b class="nc">&nbsp;        updateUserRequestDto.setUsername( customUserDto.getUsername() );</b>
+&nbsp;
+<b class="nc">&nbsp;        return updateUserRequestDto;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-07-20 03:22</div>
+</div>
+</body>
+</html>

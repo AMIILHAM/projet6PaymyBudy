@@ -1,0 +1,65 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .invoice {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 600px;
+            margin: 0 auto;
+        }
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .invoice-table th,
+        .invoice-table td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .invoice-total {
+            text-align: right;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="invoice">
+    <div class="invoice-header">
+        <h1>Pay My Buddy Invoice Test</h1>
+    </div>
+    <table class="invoice-table">
+        <tr>
+            <th>ID</th>
+            <th>Amount</th>
+            <th>Fee</th>
+            <th>Source</th>
+            <th>Destination</th>
+        </tr>
+        <tr>
+            <td>[[${transaction.id}]]</td>
+            <td>[[${transaction.amount}]]</td>
+            <td>[[${transaction.fee}]]</td>
+            <td>[[${transaction.source}]]</td>
+            <td>[[${transaction.destination}]]</td>
+        </tr>
+    </table>
+    <div class="invoice-total">
+        Total Amount: [[${transaction.amount + transaction.fee}]]
+    </div>
+</div>
+</body>
+</html>
+

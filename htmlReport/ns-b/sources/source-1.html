@@ -1,0 +1,160 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ContactController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.demos.paymybuddy.web</a>
+</div>
+
+<h1>Coverage Summary for Class: ContactController (com.demos.paymybuddy.web)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ContactController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    25%
+  </span>
+  <span class="absValue">
+    (1/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    5.6%
+  </span>
+  <span class="absValue">
+    (1/18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.demos.paymybuddy.web;
+&nbsp;
+&nbsp;import com.demos.paymybuddy.domain.CustomUser;
+&nbsp;import com.demos.paymybuddy.dto.CustomUserDto;
+&nbsp;import com.demos.paymybuddy.mapper.CustomUserMapper;
+&nbsp;import com.demos.paymybuddy.service.CustomUserService;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import org.springframework.stereotype.Controller;
+&nbsp;import org.springframework.ui.Model;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import javax.servlet.http.HttpSession;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Objects;
+&nbsp;import java.util.stream.Collectors;
+&nbsp;
+&nbsp;@Controller
+<b class="fc">&nbsp;@RequiredArgsConstructor</b>
+&nbsp;public class ContactController {
+&nbsp;
+&nbsp;    private final CustomUserService userService;
+&nbsp;    private final CustomUserMapper userMapper;
+&nbsp;
+&nbsp;    @GetMapping(&quot;/contact&quot;)
+&nbsp;    public String contactPage(HttpSession session, Model model) {
+<b class="nc">&nbsp;        CustomUserDto userDto = this.userService.getConnectedUser(session);</b>
+&nbsp;
+<b class="nc">&nbsp;        model.addAttribute(&quot;pageName&quot;, &quot;Contact&quot;);</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;user&quot;, userDto);</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;connectionList&quot;, userDto.getFriendsList());</b>
+&nbsp;
+<b class="nc">&nbsp;        return &quot;contact&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/contact/add&quot;)
+&nbsp;    public String addConnexion(@RequestParam String email,HttpSession session, Model model){
+<b class="nc">&nbsp;        if(this.userService.isExistByEmail(email)){</b>
+<b class="nc">&nbsp;            CustomUserDto userDto = this.userService.getConnectedUser(session);</b>
+<b class="nc">&nbsp;            this.userService.addFriend(userDto.getId(), email);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return &quot;redirect:/contact&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/contact/deleteContact/{id}&quot;)
+&nbsp;    public String deleteContact(@PathVariable Long id,HttpSession session, Model model){
+<b class="nc">&nbsp;        CustomUserDto userDto = this.userService.getConnectedUser(session);</b>
+<b class="nc">&nbsp;        List&lt;CustomUser&gt; filteredFriendsList = userDto.getFriendsList()</b>
+<b class="nc">&nbsp;                .stream()</b>
+<b class="nc">&nbsp;                .filter(friend -&gt; !Objects.equals(friend.getId(), id))</b>
+<b class="nc">&nbsp;                .collect(Collectors.toList());</b>
+&nbsp;
+<b class="nc">&nbsp;        userDto.setFriendsList(filteredFriendsList);</b>
+<b class="nc">&nbsp;        this.userService.save(userDto);</b>
+&nbsp;
+<b class="nc">&nbsp;        return &quot;redirect:/contact&quot;;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-07-20 03:22</div>
+</div>
+</body>
+</html>

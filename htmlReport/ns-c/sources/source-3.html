@@ -1,0 +1,99 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > CustomUserService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.demos.paymybuddy.service</a>
+</div>
+
+<h1>Coverage Summary for Class: CustomUserService (com.demos.paymybuddy.service)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">CustomUserService$MockitoMock$442464247</td>
+  </tr>
+  <tr>
+    <td class="name">CustomUserService$MockitoMock$442464247$auxiliary$8f9XZVjn</td>
+  </tr>
+  <tr>
+    <td class="name">CustomUserService$MockitoMock$442464247$auxiliary$9eOiqqRO</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.demos.paymybuddy.service;
+&nbsp;
+&nbsp;import com.demos.paymybuddy.domain.CustomUser;
+&nbsp;import com.demos.paymybuddy.dto.CustomUserDto;
+&nbsp;import com.demos.paymybuddy.dto.UpdateUserRequestDto;
+&nbsp;
+&nbsp;import javax.servlet.http.HttpSession;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;public interface CustomUserService {
+&nbsp;    Optional&lt;CustomUser&gt; findById(Long id);
+&nbsp;    CustomUserDto getCustomUserDtoByEmail(String email);
+&nbsp;    CustomUserDto getConnectedUser(HttpSession session);
+&nbsp;    UpdateUserRequestDto getConnectedUserAsUpdateUserRequestDto(HttpSession session);
+&nbsp;    CustomUser findByEmail(String email);
+&nbsp;    boolean isExistByEmail(String email);
+&nbsp;    void save(CustomUserDto userDto);
+&nbsp;    CustomUserDto update(CustomUserDto userDto,UpdateUserRequestDto updateUserRequestDto);
+&nbsp;    String encodePassword(String password);
+&nbsp;    boolean isPasswordValid(String oldPassword, String newPassword);
+&nbsp;
+&nbsp;    void addFriend(Long userId, String friendEmail);
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-07-20 03:22</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,221 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > TransactionServiceImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.demos.paymybuddy.service.impl</a>
+</div>
+
+<h1>Coverage Summary for Class: TransactionServiceImpl (com.demos.paymybuddy.service.impl)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TransactionServiceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    48.6%
+  </span>
+  <span class="absValue">
+    (17/35)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">TransactionServiceImpl$$EnhancerBySpringCGLIB$$b00054a8</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    48.6%
+  </span>
+  <span class="absValue">
+    (17/35)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.demos.paymybuddy.service.impl;
+&nbsp;
+&nbsp;import com.demos.paymybuddy.domain.Account;
+&nbsp;import com.demos.paymybuddy.domain.CustomUser;
+&nbsp;import com.demos.paymybuddy.domain.Transaction;
+&nbsp;import com.demos.paymybuddy.dto.CustomUserDto;
+&nbsp;import com.demos.paymybuddy.dto.PaymentRequestDto;
+&nbsp;import com.demos.paymybuddy.dto.TransactionDto;
+&nbsp;import com.demos.paymybuddy.mapper.TransactionMapper;
+&nbsp;import com.demos.paymybuddy.repository.TransactionRepository;
+&nbsp;import com.demos.paymybuddy.service.AccountService;
+&nbsp;import com.demos.paymybuddy.service.CustomUserService;
+&nbsp;import com.demos.paymybuddy.service.TransactionService;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import lombok.extern.slf4j.Slf4j;
+&nbsp;import org.springframework.data.domain.Page;
+&nbsp;import org.springframework.data.domain.Pageable;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import javax.transaction.Transactional;
+&nbsp;import java.time.Instant;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;import java.util.stream.Collectors;
+&nbsp;
+<b class="fc">&nbsp;@Slf4j</b>
+&nbsp;@Service
+<b class="fc">&nbsp;@RequiredArgsConstructor</b>
+&nbsp;public class TransactionServiceImpl implements TransactionService {
+&nbsp;
+&nbsp;     private final TransactionRepository transactionRepository;
+&nbsp;     private final TransactionMapper transactionMapper;
+&nbsp;     private final CustomUserService userService;
+&nbsp;     private final AccountService accountService;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Transaction save(Transaction transaction) {
+<b class="fc">&nbsp;        return this.transactionRepository.save(transaction);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Transactional(rollbackOn = Exception.class)
+&nbsp;    @Override
+&nbsp;    public Transaction makePayment(PaymentRequestDto paymentRequestDto) {
+&nbsp;
+&nbsp;        try {
+<b class="fc">&nbsp;            Optional&lt;CustomUser&gt; userSender = this.userService.findById(paymentRequestDto.getSourceAccountId());</b>
+<b class="fc">&nbsp;            CustomUser userReceiver = this.userService.findByEmail(paymentRequestDto.getDestinationAccountEmail());</b>
+&nbsp;
+<b class="fc">&nbsp;            if (userSender.isPresent()) {</b>
+&nbsp;
+<b class="fc">&nbsp;                Account sourceAccount = userSender.get().getAccount();</b>
+<b class="fc">&nbsp;                Account destinationAccount = userReceiver.getAccount();</b>
+&nbsp;
+&nbsp;                // Calcule de frais du transfers.
+<b class="fc">&nbsp;                Double fee = paymentRequestDto.getAmount() * 0.05;</b>
+&nbsp;
+&nbsp;                // Test si le solde du compte est supérieur au (Montant transferé * le cout du transfer de l&#39;app)
+<b class="nc">&nbsp;                if (sourceAccount.getBalance() &gt;= (paymentRequestDto.getAmount()) + fee) {</b>
+&nbsp;                    // Ici on diminue le cout du transfert
+<b class="nc">&nbsp;                    sourceAccount.setBalance(sourceAccount.getBalance() - fee);</b>
+&nbsp;                    // Ici on diminue le montant depuis le compte qui a effectue le transfer
+<b class="nc">&nbsp;                    sourceAccount.setBalance(sourceAccount.getBalance() - paymentRequestDto.getAmount());</b>
+&nbsp;
+&nbsp;                    // Ici on ajout le montant au compte destinataire
+<b class="nc">&nbsp;                    destinationAccount.setBalance(destinationAccount.getBalance() + paymentRequestDto.getAmount());</b>
+&nbsp;
+&nbsp;
+&nbsp;                    // Après l&#39;operation s&#39;effectue correctement on cree un transaction pour l&#39;enregistrer
+&nbsp;                    // au niveau de la base de donnees
+<b class="nc">&nbsp;                    Transaction transaction = new Transaction();</b>
+<b class="nc">&nbsp;                    transaction.setAmount(paymentRequestDto.getAmount());</b>
+<b class="nc">&nbsp;                    transaction.setSource(sourceAccount);</b>
+<b class="nc">&nbsp;                    transaction.setDestination(destinationAccount);</b>
+<b class="nc">&nbsp;                    transaction.setFee(fee);</b>
+&nbsp;
+<b class="nc">&nbsp;                    transaction.setCreatedAt(Instant.now());</b>
+<b class="nc">&nbsp;                    transaction.setCreatedBy(sourceAccount.getOwner().getUsername());</b>
+<b class="nc">&nbsp;                    transaction.setLastModifiedAt(Instant.now());</b>
+<b class="nc">&nbsp;                    transaction.setLastModifiedBy(sourceAccount.getOwner().getUsername());</b>
+&nbsp;
+&nbsp;
+&nbsp;                    // ici on fait la persistance des enregistrements au niveau de la base de données.
+<b class="nc">&nbsp;                    this.accountService.save(sourceAccount);</b>
+<b class="nc">&nbsp;                    this.accountService.save(destinationAccount);</b>
+<b class="nc">&nbsp;                    this.transactionRepository.save(transaction);</b>
+&nbsp;
+<b class="nc">&nbsp;                    return transaction;</b>
+&nbsp;                }
+&nbsp;            }
+<b class="fc">&nbsp;        } catch (Exception e) {</b>
+<b class="fc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public List&lt;TransactionDto&gt; getAllTransactionsByAccount(Account account) {
+<b class="fc">&nbsp;        return this.transactionRepository.findAllBySourceOrDestinationOrderByCreatedAtDesc(account,account)</b>
+<b class="fc">&nbsp;                .stream().map(this.transactionMapper::transactionToTransactionDto)</b>
+<b class="fc">&nbsp;                .collect(Collectors.toList());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Page&lt;TransactionDto&gt; getPageTransactionsByAccount(Account account, Pageable pageable) {
+<b class="fc">&nbsp;        return this.transactionRepository.findAllBySourceOrDestinationOrderByCreatedAtDesc(account,account,pageable)</b>
+<b class="fc">&nbsp;                .map(this.transactionMapper::transactionToTransactionDto);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-07-20 03:22</div>
+</div>
+</body>
+</html>
